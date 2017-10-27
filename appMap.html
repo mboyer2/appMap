@@ -16,23 +16,33 @@
 			<img v-on:click ="makeDot"  
 			id = "map" src = "http://geology.com/state-map/maps/colorado-county-map.gif"></img>
 
-
 			<div 
-			v-for="(pushedDot, index) in dots" 
 			class = "dot" 
+			v-for="(pushedDot, index) in dots" 
 			v-bind:style="{ left : pushedDot.pageX, top : pushedDot.pageY } "
 			v-on:click="removeDot(pushedDot, index)"
 			></div>
 			
+			<div v-for="(pushedDot, index) in dots">
+				<input 
+				v-if="pushedDot.isBeingEdited"
+				class="note"
+				type="text"
+				v-bind:style="{ left : pushedDot.pageX, top : pushedDot.pageY } "
+				v-on:keyup.enter="submit(pushedDot)"
+				v-model="pushedDot.message"
 
-			<input 
-			v-for="note in notes"
-			class="note"
-			type="text"
-			v-bind:style="{ left :
-			note.notesX, top : 
-			note.notesY }" 
-			>poop</input>
+				></input>
+				<p
+				v-bind:style="{ left : pushedDot.pageX, top : pushedDot.pageY } "
+				v-if="!pushedDot.isBeingEdited"
+
+				v-on:click="backToInput(pushedDot)"
+				>{{pushedDot.message}}</p>
+			</div>
+
+			
+			
 
 
 
